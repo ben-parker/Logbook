@@ -1,0 +1,39 @@
+﻿@model IEnumerable<Logbook.Models.Car>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+@section Styles {
+    <link href="@Url.Content("~/css/vehicles.css")" rel="stylesheet" type="text/css" />
+}
+
+<h2>Index</h2>
+
+<p>
+    <a asp-action="Add">Add Vehicle</a>
+</p>
+<div class="vehicle-container">
+    @foreach (var car in Model)
+    {
+        <div class="vehicle-display">
+            <div class="vehicle-display-name">
+                <h3>@car.Name <small>@car.Mileage miles</small></h3>
+            </div>
+            <div class="vehicle-display-details">
+                <p>@car.Year @car.Make @car.Model</p>
+                @if (car.Services.Any())
+                {
+                    <p>Recent Services:</p>
+                    <ul>
+                        @foreach (var service in car.Services)
+                        {
+                            <li>@service.Description</li>
+                        }
+                    </ul>
+                }
+            </div>
+        </div>
+    }
+
+</div>

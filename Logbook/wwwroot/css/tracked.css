@@ -1,0 +1,24 @@
+﻿.dashboard-label {
+    float: left;
+    border: 1px solid blue;
+    grid-column: 1 / 2;
+}
+
+.dashboard-details {
+    float: right;
+    width: 70%;
+    border: 1px solid blue;
+    grid-column: 2 / 3;
+}
+
+.dashboard-row {
+    display: grid;
+    grid-template-columns: 1fr 3fr;
+    grid-auto-flow: column;
+    grid-gap: 10px;
+    padding-bottom: 30px;
+}
+
+#view-by {
+    padding-bottom: 10px;
+}

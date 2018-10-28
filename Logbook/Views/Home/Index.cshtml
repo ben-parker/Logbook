@@ -1,0 +1,93 @@
+﻿@model Logbook.ViewModels.DashboardView
+@{
+    ViewData["Title"] = "Home Page";
+}
+@using Logbook.Extensions
+
+@section Styles {
+    <link href="@Url.Content("~/css/dashboard.css")" rel="stylesheet" type="text/css" />
+}
+
+<h2>Your Week</h2>
+<div class="week-display">
+    @for (int i = 0; i < 7; i++)
+    {
+    <div class="day">
+        @if (i == 0)
+        {
+            <text>Today</text>
+        }
+        else
+        {
+            @DateTime.Today.AddDays(i).DayOfWeek<text> - </text>@DateTime.Today.AddDays(i).Day
+        }
+
+        @if (Model.Calendar.Items[i].Any())
+        {
+            <ul>
+                @foreach (string item in Model.Calendar.Items[i])
+                {
+                    <li>@item</li>
+                }
+            </ul>
+        }
+    </div>
+    }
+</div>
+
+<div id="dashboard-container">
+    <h2>Coming Up</h2>
+    <div id="dashboard-upcoming" class="dashboard">
+
+        @if (Model.Upcoming.Any())
+        {
+            <ul>
+                @foreach (var item in Model.Upcoming)
+                {
+                    <li class="item">
+                        <div class="check">&#10004;</div>
+                        <div class="item-description">
+                            @item.Description
+                            <div class="item-details">Last Completed: 
+                                @if (item.LastCompleted != null)
+                                {
+                                    @item.LastCompleted.CompletedDate.ToStringConditionalYear()
+                                }
+                                else
+                                {
+                                    <text>Never</text>
+                                }
+                            </div>
+                        </div>
+                        <div class="item-date no-wrap">@item.DueDate</div>
+                    </li>
+                }
+            </ul>
+        }
+        else
+        {
+            <text>No upcoming items.</text>
+        }
+
+        </div>
+    <h2>Recently Done</h2>
+    <div id="dashboard-recent" class="dashboard">
+        <ul>
+            <li class="item">
+                <div class="check">&#10004;</div>
+                <div class="item-description">
+                    Oil Change
+                    <div class="item-details">Cost: $xxx</div>
+                </div>
+                <div class="item-date">completed September 12</div>
+            </li>
+            <li class="item">
+                <div class="check">&#10004;</div>
+                <div class="item-description">
+                    Get the ole' ticker check out long text
+                </div>
+                <div class="item-date">completed September 19</div>
+            </li>
+        </ul>
+    </div>
+</div>

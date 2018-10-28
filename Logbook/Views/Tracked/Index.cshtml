@@ -1,0 +1,50 @@
+﻿@using Logbook.Extensions
+@model IEnumerable<Logbook.ViewModels.TrackedIndexView>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+
+@section Styles {
+    <link href="@Url.Content("~/css/tracked.css")" rel="stylesheet" type="text/css" />
+}
+
+<h2>Index</h2>
+
+<p>
+    <a asp-action="Add">Create New</a>
+</p>
+<div id="dashboard">
+    <div id="view-by">Quick Search: <input type="text" class="search" /></div>
+    <div id="dashboard-contents">
+        @foreach (var item in Model)
+        {
+            <div class="dashboard-row">
+                <div class="dashboard-label">@item.Category</div>
+                <text class="dashboard-details">
+                    <ul>
+                        @foreach (var tracked in item.Items)
+                        {
+                            <li class="dashboard-item">
+                                @tracked.Description
+                                <small>Last Done: 
+                                    @if (tracked.Done.Any())
+                                    {
+                                       @tracked.Done.OrderByDescending(d => d.CompletedDate).FirstOrDefault().CompletedDate.ToStringConditionalYear()
+                                    }
+                                    else
+                                    {
+                                        <text>Never</text>
+                                    }
+                                    | Scheduled: Dec 5, 2018
+                                </small>
+                                <br />I did this - links to add done and Dismiss
+                            </li>
+                        }
+                    </ul>
+                    <a>See all...</a>
+            </div>
+        }
+    </div>
+</div>
